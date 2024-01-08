@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('item_id')->constrained();
             $table->double('usd');
             $table->unsignedBigInteger('mmk');
             $table->timestamps();

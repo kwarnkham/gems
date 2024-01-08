@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait Filterable
 {
-    public function scopeFilter(Builder $query, $filters)
+    public function scopeFilter(Builder $query, $filters): Builder
     {
         $query->when(
             $filters['status'] ?? null,
@@ -23,5 +23,7 @@ trait Filterable
                 $name
             )
         );
+
+        return $query;
     }
 }
