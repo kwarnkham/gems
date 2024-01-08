@@ -38,27 +38,23 @@ class SpecificationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Specification $specification)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Specification $specification)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Specification $specification)
     {
-        //
+        $data = $request->validate([
+            'carat' => ['sometimes', 'required'],
+            'cut' => ['sometimes', 'required'],
+            'clarity' => ['sometimes', 'required'],
+            'color' => ['sometimes', 'required'],
+            'certification' => ['sometimes', 'required'],
+            'shape' => ['sometimes', 'required'],
+            'origin' => ['sometimes', 'required']
+        ]);
+
+        $specification->update($data);
+
+        return response()->json($specification, HttpStatus::OK->value);
     }
 
     /**

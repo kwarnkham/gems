@@ -32,4 +32,18 @@ class SpecificationTest extends TestCase
         $response->assertCreated();
         $this->assertDatabaseCount('specifications', 1);
     }
+
+    public function test_update_specification_of_an_item(): void
+    {
+        $item = Item::factory()->create();
+        $response = $this->actingAs($this->user)->postJson('api/specifications', [
+            'item_id' => $item->id
+        ]);
+
+        $response = $this->actingAs($this->user)->putJson("api/specifications/{$response->json()['id']}", [
+            'carat' => 3
+        ]);
+
+        $this->assertEquals($response->json()['carat'], 3);
+    }
 }
