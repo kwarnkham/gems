@@ -3,9 +3,14 @@
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum', 'role:admin'])
-    ->controller(ItemController::class)
+Route::controller(ItemController::class)
     ->prefix('items')
     ->group(function () {
-        Route::post('', 'store');
+        Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
+            Route::post('', 'store');
+            Route::post('{item}', 'update');
+        });
+
+        Route::get('', 'index');
+        Route::get('{item}', 'find');
     });
