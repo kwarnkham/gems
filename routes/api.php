@@ -3,6 +3,7 @@
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\SpecificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(ItemController::class)
@@ -33,5 +34,13 @@ Route::controller(PriceController::class)
         Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
             Route::post('', 'store');
             Route::put('{price}', 'update');
+        });
+    });
+
+Route::controller(SpecificationController::class)
+    ->prefix('specifications')
+    ->group(function () {
+        Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
+            Route::post('', 'store');
         });
     });
