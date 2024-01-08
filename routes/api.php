@@ -32,5 +32,6 @@ Route::controller(PriceController::class)
     ->group(function () {
         Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
             Route::post('', 'store');
+            Route::put('{price}', 'update');
         });
     });

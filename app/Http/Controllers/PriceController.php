@@ -20,4 +20,17 @@ class PriceController extends Controller
 
         return response()->json($price, HttpStatus::CREATED->value);
     }
+
+    public function update(Request $request, Price $price)
+    {
+        $data = $request->validate([
+            'usd' => ['required', 'numeric'],
+            'mmk' => ['required', 'numeric'],
+            'active' => ['required', 'boolean']
+        ]);
+
+        $price->update($data);
+
+        return response()->json($price, HttpStatus::OK->value);
+    }
 }
