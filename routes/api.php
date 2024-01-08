@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PictureController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(ItemController::class)
@@ -8,9 +9,18 @@ Route::controller(ItemController::class)
     ->group(function () {
         Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
             Route::post('', 'store');
-            Route::post('{item}', 'update');
+            Route::put('{item}', 'update');
+            Route::post('{item}/pictures', 'addPictures');
         });
 
         Route::get('', 'index');
         Route::get('{item}', 'find');
+    });
+
+Route::controller(PictureController::class)
+    ->prefix('pictures')
+    ->group(function () {
+        Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
+            Route::delete('{picture}', 'destroy');
+        });
     });

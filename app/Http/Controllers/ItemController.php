@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\HttpStatus;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
@@ -47,5 +48,21 @@ class ItemController extends Controller
         $item = Item::query()->update($data);
 
         return response()->json($item, HttpStatus::OK->value);
+    }
+
+
+    public function addPictures(Request $request, Item $item)
+    {
+        $data = $request->validate([
+            'pictures' => ['required', 'array'],
+            'pictures.*' => ['required', 'image']
+        ]);
+
+        foreach ($data['pictures'] as $picture) {
+            $name = Storage::putFile('items', $picture);
+            $item->pictures()->create(['name' => $name]);
+        }
+
+        return response()->json($item->fresh(['pictures']), HttpStatus::CREATED->value);
     }
 }

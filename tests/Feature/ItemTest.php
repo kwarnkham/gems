@@ -5,12 +5,11 @@ namespace Tests\Feature;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ItemTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
 
     private $user;
 
@@ -34,7 +33,7 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->create();
         $updatedItem = Item::factory()->make()->toArray();
-        $response = $this->actingAs($this->user)->postJson("api/items/{$item->fresh()->id}", $updatedItem);
+        $response = $this->actingAs($this->user)->putJson("api/items/{$item->fresh()->id}", $updatedItem);
         $response->assertOk();
         $this->assertEquals($updatedItem['name'], $item->fresh()->name);
         $this->assertEquals($updatedItem['description'], $item->fresh()->description);
