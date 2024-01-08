@@ -3,7 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +17,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $now = now();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        DB::table('users')->insert([
+            [
+                'name' => 'admin',
+                'password' => Hash::make('password'),
+                'created_at' => $now,
+                'updated_at' => $now
+            ]
+        ]);
+
+        DB::table('roles')->insert([
+            [
+                'name' => 'admin',
+                'created_at' => $now,
+                'updated_at' => $now
+            ]
+        ]);
+
+        DB::table('role_user')->insert([
+            [
+                'user_id' => User::query()->first()->id,
+                'role_id' => Role::query()->first()->id,
+                'created_at' => $now,
+                'updated_at' => $now
+            ]
+        ]);
     }
 }
