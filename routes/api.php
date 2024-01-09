@@ -5,6 +5,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\SpecificationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(ItemController::class)
@@ -44,6 +45,14 @@ Route::controller(SpecificationController::class)
         Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
             Route::post('', 'store');
             Route::put('{specification}', 'update');
+        });
+    });
+
+Route::controller(UserController::class)
+    ->prefix('users')
+    ->group(function () {
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::get('me', 'me');
         });
     });
 
