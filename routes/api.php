@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PriceController;
@@ -44,4 +45,13 @@ Route::controller(SpecificationController::class)
             Route::post('', 'store');
             Route::put('{specification}', 'update');
         });
+    });
+
+
+Route::controller(AuthController::class)
+    ->group(function () {
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::post('logout', 'logout');
+        });
+        Route::post('login', 'login');
     });
