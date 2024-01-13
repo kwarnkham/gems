@@ -28,7 +28,7 @@ class ItemController extends Controller
             'name' => ['sometimes']
         ]);
 
-        $query = Item::query()->latest('id')->filter($filters);
+        $query = Item::query()->with(['pictures'])->latest('id')->filter($filters);
 
         return response()->json($query->paginate($request->per_page ?? 10), HttpStatus::OK->value);
     }
