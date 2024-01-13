@@ -30,7 +30,7 @@ class ItemController extends Controller
 
         $query = Item::query()->with(['pictures'])->latest('id')->filter($filters);
 
-        return response()->json($query->paginate($request->per_page ?? 10), HttpStatus::OK->value);
+        return response()->json(['data' => $query->paginate($request->per_page ?? 10)], HttpStatus::OK->value);
     }
 
     public function find(Request $request, Item $item)
