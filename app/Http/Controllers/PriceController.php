@@ -18,7 +18,7 @@ class PriceController extends Controller
 
         $price = Price::query()->create($data);
 
-        return response()->json($price, HttpStatus::CREATED->value);
+        return response()->json($price->fresh(), HttpStatus::CREATED->value);
     }
 
     public function update(Request $request, Price $price)

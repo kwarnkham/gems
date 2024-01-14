@@ -44,7 +44,7 @@ class ItemTest extends TestCase
         Item::factory()->count(20)->create();
         $response = $this->getJson("api/items");
         $response->assertOk();
-        $response->assertJsonCount(10, 'data');
+        $response->assertJsonCount(10, 'data.data');
     }
 
     public function test_find_an_item()
