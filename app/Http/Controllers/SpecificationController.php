@@ -57,11 +57,9 @@ class SpecificationController extends Controller
         return response()->json($specification, HttpStatus::OK->value);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Specification $specification)
+
+    public function find(Specification $specification)
     {
-        //
+        return response()->json($specification);
     }
 }

@@ -46,6 +46,7 @@ Route::controller(SpecificationController::class)
         Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
             Route::post('', 'store');
             Route::put('{specification}', 'update');
+            Route::get('{specification}', 'find');
         });
     });
 
