@@ -45,7 +45,7 @@ class ItemController extends Controller
             'description' => ['required'],
         ]);
 
-        $item = Item::query()->update($data);
+        $item->update($data);
 
         return response()->json($item, HttpStatus::OK->value);
     }
