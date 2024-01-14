@@ -43,13 +43,13 @@ class SpecificationController extends Controller
     public function update(Request $request, Specification $specification)
     {
         $data = $request->validate([
-            'carat' => ['sometimes', 'required'],
-            'cut' => ['sometimes', 'required'],
-            'clarity' => ['sometimes', 'required'],
-            'color' => ['sometimes', 'required'],
-            'certification' => ['sometimes', 'required'],
-            'shape' => ['sometimes', 'required'],
-            'origin' => ['sometimes', 'required']
+            'carat' => ['sometimes'],
+            'cut' => ['sometimes'],
+            'clarity' => ['sometimes'],
+            'color' => ['sometimes'],
+            'certification' => ['sometimes'],
+            'shape' => ['sometimes'],
+            'origin' => ['sometimes']
         ]);
 
         $specification->update($data);
