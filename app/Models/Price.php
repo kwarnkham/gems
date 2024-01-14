@@ -14,8 +14,13 @@ class Price extends BaseModel
             $price->refresh();
             if ($price->active)
                 Price::query()->where('id', '!=', $price->id)
-                    ->whereRelation('item', 'items.id', '=', $price->item_id)
+                    ->where('item_id', $price->item_id)
                     ->update(['active' => false]);
+            if (Price::query()->where('item_id', $price->item_id)->count() > 5) {
+                Price::query()
+                    ->where('item_id', $price->item_id)
+                    ->orderBy('id', 'asc')->frist()->delete();
+            }
         });
     }
     use HasFactory, Filterable;
