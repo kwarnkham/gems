@@ -36,8 +36,6 @@ class PriceTest extends TestCase
 
         $this->assertDatabaseCount('prices', 2);
         $this->assertEquals($item->prices()->skip(1)->first()->mmk, $response->json()['mmk']);
-
-        dump(Price::all()->toArray());
     }
 
     public function test_make_a_price_inactive()

@@ -12,7 +12,6 @@ class Price extends BaseModel
     {
         static::created(function (Price $price) {
             $price->refresh();
-            dump($price->toArray());
             if ($price->active)
                 Price::query()->where('id', '!=', $price->id)
                     ->whereRelation('item', 'items.id', '=', $price->item_id)
