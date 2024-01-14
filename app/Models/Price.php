@@ -19,7 +19,7 @@ class Price extends BaseModel
             if (Price::query()->where('item_id', $price->item_id)->count() > 5) {
                 Price::query()
                     ->where('item_id', $price->item_id)
-                    ->orderBy('id', 'asc')->frist()->delete();
+                    ->orderBy('id', 'asc')->first()->delete();
             }
         });
     }
