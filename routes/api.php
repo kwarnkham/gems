@@ -37,6 +37,7 @@ Route::controller(PriceController::class)
             Route::post('', 'store');
             Route::put('{price}', 'update');
         });
+        Route::get('', 'index');
     });
 
 Route::controller(SpecificationController::class)

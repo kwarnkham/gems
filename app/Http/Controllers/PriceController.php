@@ -33,4 +33,17 @@ class PriceController extends Controller
 
         return response()->json($price, HttpStatus::OK->value);
     }
+
+    public function index(Request $request)
+    {
+        $filters = $request->validate([
+            'item_id' => ['sometimes']
+        ]);
+
+        $query = Price::query()->filter($filters);
+
+        return response()->json([
+            'data' => $query->paginate($request->per_page ?? 10)
+        ]);
+    }
 }

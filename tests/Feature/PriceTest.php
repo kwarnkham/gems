@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PriceTest extends TestCase
@@ -57,5 +56,15 @@ class PriceTest extends TestCase
         $response->assertOk();
 
         $this->assertFalse($response->json()['active']);
+    }
+
+    public function test_list_prices_of_an_item()
+    {
+        $item = Item::factory()->create();
+        $item->prices()->create(['usd' => 100, 'mmk' => 340000]);
+
+        $response = $this->actingAs($this->user)->getJson("api/prices?item_id={$item->id}");
+
+        $response->assertOk();
     }
 }

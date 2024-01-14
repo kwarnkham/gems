@@ -24,6 +24,16 @@ trait Filterable
             )
         );
 
+        $query->when(
+            $filters['item_id'] ?? null,
+            fn (Builder $query, $itemId) => $query->where(
+                'item_id',
+                $itemId
+            )
+        );
+
+
+
         return $query;
     }
 }
