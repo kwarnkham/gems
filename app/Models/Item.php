@@ -43,4 +43,9 @@ class Item extends BaseModel
     {
         return $this->hasMany(Price::class);
     }
+
+    public function activePrices(): HasMany
+    {
+        return $this->hasMany(Price::class)->where('active', true);
+    }
 }
