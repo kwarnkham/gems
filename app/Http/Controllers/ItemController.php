@@ -35,7 +35,7 @@ class ItemController extends Controller
 
     public function find(Request $request, Item $item)
     {
-        return response()->json($item->fresh(['specification', 'pictures', 'prices']), HttpStatus::OK->value);
+        return response()->json($item->fresh(['specification', 'pictures', 'active_prices']), HttpStatus::OK->value);
     }
 
     public function update(Request $request, Item $item)
