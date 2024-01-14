@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Item;
+use App\Models\Price;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -24,6 +25,7 @@ class PriceTest extends TestCase
     public function test_add_a_price_to_an_item()
     {
         $item = Item::factory()->create();
+        $item->prices()->create(['mmk' => 1, 'usd' => 1]);
         $response = $this->actingAs($this->user)->postJson('api/prices', [
             'usd' => fake()->numberBetween(100, 1000),
             'mmk' => fake()->numberBetween(100, 1000),
@@ -32,8 +34,10 @@ class PriceTest extends TestCase
 
         $response->assertCreated();
 
-        $this->assertDatabaseCount('prices', 1);
-        $this->assertEquals($item->prices()->first()->mmk, $response->json()['mmk']);
+        $this->assertDatabaseCount('prices', 2);
+        $this->assertEquals($item->prices()->skip(1)->first()->mmk, $response->json()['mmk']);
+
+        dump(Price::all()->toArray());
     }
 
     public function test_make_a_price_inactive()
