@@ -28,14 +28,14 @@ class ItemController extends Controller
             'name' => ['sometimes']
         ]);
 
-        $query = Item::query()->with(['pictures', 'active_prices'])->latest('id')->filter($filters);
+        $query = Item::query()->with(['pictures', 'activePrices'])->latest('id')->filter($filters);
 
         return response()->json(['data' => $query->paginate($request->per_page ?? 10)], HttpStatus::OK->value);
     }
 
     public function find(Request $request, Item $item)
     {
-        return response()->json($item->fresh(['specification', 'pictures', 'active_prices']), HttpStatus::OK->value);
+        return response()->json($item->fresh(['specification', 'pictures', 'activePrices']), HttpStatus::OK->value);
     }
 
     public function update(Request $request, Item $item)
