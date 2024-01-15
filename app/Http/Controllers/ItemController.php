@@ -57,6 +57,23 @@ class ItemController extends Controller
         return response()->json($item, HttpStatus::OK->value);
     }
 
+    public function syncCategories(Request $request, Item $item)
+    {
+        $data = $request->validate([
+            'category_ids' => ['required', 'array'],
+            'category_ids.*' => ['required', 'exists:categories,id'],
+        ]);
+
+        $item->categories()->sync($data['category_ids']);
+
+        return response()->json($item->fresh([
+            'specification',
+            'pictures',
+            'activePrices',
+            'categories'
+        ]), HttpStatus::OK->value);
+    }
+
 
     public function addPictures(Request $request, Item $item)
     {

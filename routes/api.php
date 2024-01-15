@@ -16,6 +16,7 @@ Route::controller(ItemController::class)
             Route::post('', 'store');
             Route::put('{item}', 'update');
             Route::post('{item}/pictures', 'addPictures');
+            Route::post('{item}/categories/sync', 'syncCategories');
         });
 
         Route::get('', 'index');
