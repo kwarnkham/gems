@@ -60,8 +60,8 @@ class ItemController extends Controller
     public function syncCategories(Request $request, Item $item)
     {
         $data = $request->validate([
-            'category_ids' => ['required', 'array'],
-            'category_ids.*' => ['required', 'exists:categories,id'],
+            'category_ids' => ['array'],
+            'category_ids.*' => ['sometimes', 'required', 'exists:categories,id'],
         ]);
 
         $item->categories()->sync($data['category_ids']);
