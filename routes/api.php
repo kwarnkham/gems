@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PriceController;
@@ -47,6 +48,15 @@ Route::controller(SpecificationController::class)
             Route::post('', 'store');
             Route::put('{specification}', 'update');
             Route::get('{specification}', 'find');
+        });
+    });
+
+Route::controller(CategoryController::class)
+    ->prefix('categories')
+    ->group(function () {
+        Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
+            Route::post('', 'store');
+            Route::get('', 'index');
         });
     });
 
