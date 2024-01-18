@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PriceController;
@@ -67,6 +68,12 @@ Route::controller(UserController::class)
         Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('me', 'me');
         });
+    });
+
+Route::controller(ContactController::class)
+    ->prefix('contacts')
+    ->group(function () {
+        Route::post('', 'store');
     });
 
 
