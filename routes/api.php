@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\MeetController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\SpecificationController;
@@ -74,6 +75,18 @@ Route::controller(ContactController::class)
     ->prefix('contacts')
     ->group(function () {
         Route::post('', 'store');
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::get('', 'index');
+            Route::get('{contact}', 'find');
+        });
+    });
+
+Route::controller(MeetController::class)
+    ->prefix('meets')
+    ->group(function () {
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::post('', 'store');
+        });
     });
 
 

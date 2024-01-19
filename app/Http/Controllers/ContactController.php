@@ -20,4 +20,16 @@ class ContactController extends Controller
 
         return response()->json($contact, HttpStatus::CREATED->value);
     }
+
+    public function index(Request $request)
+    {
+        return response()->json([
+            'data' => Contact::query()->paginate($request->per_page ?: 10)
+        ]);
+    }
+
+    public function find(Request $request, Contact $contact)
+    {
+        return response()->json($contact->load(['meets']));
+    }
 }
