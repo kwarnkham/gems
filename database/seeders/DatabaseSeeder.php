@@ -44,5 +44,13 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => $now
             ]
         ]);
+
+        DB::table('app_settings')->insert([
+            [
+                'usd_rate' => '3500',
+                'created_at' => $now,
+                'updated_at' => $now
+            ]
+        ]);
     }
 }

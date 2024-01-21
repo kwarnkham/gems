@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppSettingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
@@ -52,6 +53,15 @@ Route::controller(SpecificationController::class)
             Route::put('{specification}', 'update');
             Route::get('{specification}', 'find');
         });
+    });
+
+Route::controller(AppSettingController::class)
+    ->prefix('app-settings')
+    ->group(function () {
+        Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
+            Route::put('{appSetting}', 'update');
+        });
+        Route::get('{appSetting}', 'find');
     });
 
 Route::controller(CategoryController::class)
