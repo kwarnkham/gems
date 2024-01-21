@@ -12,7 +12,7 @@ class PriceController extends Controller
     {
         $data = $request->validate([
             'usd' => ['required', 'numeric'],
-            'mmk' => ['required', 'numeric'],
+            'mmk' => ['sometimes', 'numeric'],
             'item_id' => ['required', 'exists:items,id']
         ]);
 
@@ -25,7 +25,7 @@ class PriceController extends Controller
     {
         $data = $request->validate([
             'usd' => ['required', 'numeric'],
-            'mmk' => ['required', 'numeric'],
+            'mmk' => ['sometimes', 'numeric'],
             'active' => ['required', 'boolean']
         ]);
 

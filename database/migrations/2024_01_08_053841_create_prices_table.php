@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('item_id')->constrained();
             $table->double('usd');
-            $table->unsignedBigInteger('mmk');
+            $table->unsignedBigInteger('mmk')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
