@@ -41,9 +41,9 @@ class SpecificationTest extends TestCase
         ]);
 
         $response = $this->actingAs($this->user)->putJson("api/specifications/{$response->json()['id']}", [
-            'carat' => 3
+            'carat_weight' => 3
         ]);
 
-        $this->assertEquals($response->json()['carat'], 3);
+        $this->assertEquals($response->json()['carat_weight'], 3);
     }
 }

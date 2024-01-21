@@ -24,6 +24,7 @@ Route::controller(ItemController::class)
 
         Route::get('', 'index');
         Route::get('{item}', 'find');
+        Route::post('{item}/toggle-status', 'toggleStatus');
     });
 
 Route::controller(PictureController::class)

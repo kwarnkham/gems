@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\HttpStatus;
+use App\Enums\ItemStatus;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,8 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $filters = $request->validate([
-            'name' => ['sometimes']
+            'name' => ['sometimes'],
+            'status' => ['sometimes']
         ]);
 
         $query = Item::query()->with(['pictures', 'activePrices'])->latest('id')->filter($filters);
@@ -56,6 +58,15 @@ class ItemController extends Controller
 
         return response()->json($item, HttpStatus::OK->value);
     }
+
+    public function toggleStatus(Request $request, Item $item)
+    {
+        $item->update(['status' => $item->status == ItemStatus::ON_SALE->value ? ItemStatus::HIDDEN->value : ItemStatus::ON_SALE->value]);
+
+        return response()->json($item, HttpStatus::OK->value);
+    }
+
+
 
     public function syncCategories(Request $request, Item $item)
     {

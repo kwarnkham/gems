@@ -29,6 +29,15 @@ class ItemTest extends TestCase
         $this->assertDatabaseCount('items', 1);
     }
 
+
+    public function test_toggle_item_status()
+    {
+        $item = Item::factory()->create()->fresh();
+        $response = $this->actingAs($this->user)->postJson("api/items/{$item->id}/toggle-status");
+        $response->assertOk();
+        $this->assertNotEquals($item->status, $response->json()['status']);
+    }
+
     public function test_update_an_item()
     {
         $item = Item::factory()->create();
