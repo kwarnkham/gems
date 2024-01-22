@@ -32,6 +32,7 @@ Route::controller(PictureController::class)
     ->group(function () {
         Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
             Route::delete('{picture}', 'destroy');
+            Route::put('{picture}', 'update');
         });
     });
 

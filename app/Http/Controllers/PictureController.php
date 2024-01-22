@@ -15,4 +15,15 @@ class PictureController extends Controller
         $picture->delete();
         return response()->json();
     }
+
+    public function update(Request $request, Picture $picture)
+    {
+        $data = $request->validate([
+            'sort' => ['required', 'numeric']
+        ]);
+
+        $picture->update($data);
+
+        return response()->json($picture);
+    }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('pictureable_type');
             $table->integer('pictureable_id');
+            $table->tinyInteger('sort')->default(1);
             $table->timestamps();
         });
     }

@@ -51,4 +51,25 @@ class PictureTest extends TestCase
 
         $this->assertDatabaseCount('pictures', count($pictures) - 1);
     }
+
+    public function test_update_a_picture_sort()
+    {
+        $item = Item::factory()->create();
+        $pictures = [UploadedFile::fake()->image('1.jpg'), UploadedFile::fake()->image('2.png')];
+        $response = $this->actingAs($this->user)->postJson("api/items/{$item->id}/pictures", [
+            'pictures' => $pictures
+        ]);
+
+        $response->assertCreated();
+
+        $picture = Picture::first();
+
+        $sort = rand(1, 99);
+        $response = $this->actingAs($this->user)->putJson("api/pictures/{$picture->id}", [
+            'sort' => $sort
+        ]);
+
+        $response->assertOk();
+        $this->assertEquals($sort, $response->json()['sort']);
+    }
 }
