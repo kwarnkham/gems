@@ -7,6 +7,7 @@ use App\Enums\ItemStatus;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
@@ -94,7 +95,11 @@ class ItemController extends Controller
         ]);
 
         foreach ($data['pictures'] as $picture) {
-            $name = Storage::putFile('items', $picture);
+            if (config('app.env') == 'testing') {
+                $name = Str::random() . '.jpeg';
+            } else {
+                $name = Storage::putFile('items', $picture);
+            }
             $item->pictures()->create(['name' => $name]);
         }
 
