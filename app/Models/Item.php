@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Log;
 
 class Item extends BaseModel
 {
@@ -30,6 +31,67 @@ class Item extends BaseModel
         return $query->has('price');
     }
 
+    public function scopeSearch(Builder $query, $search): Builder
+    {
+        Log::info($search);
+        $query->when(
+            $search['price'] ?? null,
+            fn (Builder $query, $price) => $query->whereRelation(
+                'prices',
+                'active',
+                '=',
+                true
+            )->where(fn ($q) => $q->whereRelation(
+                'prices',
+                'usd',
+                '<=',
+                $price / AppSetting::query()->first()->usd_rate
+            )->orWhereRelation('prices', 'mmk', '<=', $price))
+        );
+
+        $query->when(
+            $search['carat'] ?? null,
+            fn (Builder $query, $carat) => $query->whereRelation(
+                'specification',
+                'carat_weight',
+                '<=',
+                $carat
+            )
+        );
+
+        $query->when(
+            $search['color'] ?? null,
+            fn (Builder $query, $color) => $query->whereRelation(
+                'specification',
+                'color_grade',
+                '>=',
+                $color
+            )
+        );
+
+        $query->when(
+            $search['clarity'] ?? null,
+            fn (Builder $query, $clarity) => $query->whereRelation(
+                'specification',
+                'clarity_grade',
+                '>=',
+                $clarity
+            )
+        );
+
+        $query->when(
+            $search['cut'] ?? null,
+            fn (Builder $query, $cut) => $query->whereRelation(
+                'specification',
+                'cut_grade',
+                '>=',
+                $cut
+            )
+        );
+
+        return $query;
+    }
+
     public function specification(): HasOne
     {
         return $this->hasOne(Specification::class);
@@ -37,7 +99,7 @@ class Item extends BaseModel
 
     public function pictures(): MorphMany
     {
-        return $this->morphMany(Picture::class, 'pictureable');
+        return $this->morphMany(Picture::class, 'pictureable')->latest('sort');
     }
 
     public function prices(): HasMany

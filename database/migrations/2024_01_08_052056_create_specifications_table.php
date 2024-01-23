@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('item_id')->constrained();
             $table->string('shape')->nullable();
             $table->string('measurements')->nullable();
-            $table->string('carat_weight')->nullable();
-            $table->string('color_grade')->nullable();
-            $table->string('clarity_grade')->nullable();
-            $table->string('cut_grade')->nullable();
+            $table->integer('carat_weight')->nullable();
+            $table->integer('color_grade')->nullable();
+            $table->integer('clarity_grade')->nullable();
+            $table->integer('cut_grade')->nullable();
             $table->string('polish')->nullable();
             $table->string('symmetry')->nullable();
             $table->string('fluorescence')->nullable();

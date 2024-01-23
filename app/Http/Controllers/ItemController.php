@@ -28,10 +28,19 @@ class ItemController extends Controller
     {
         $filters = $request->validate([
             'name' => ['sometimes'],
-            'status' => ['sometimes']
+            'status' => ['sometimes'],
+            'carat' => ['sometimes', 'numeric'],
+            'color' => ['sometimes', 'numeric'],
+            'carat' => ['sometimes', 'numeric'],
+            'cut' => ['sometimes', 'numeric'],
+            'clarity' => ['sometimes', 'numeric'],
+            'price' => ['sometimes', 'numeric'],
         ]);
 
-        $query = Item::query()->with(['pictures', 'activePrices'])->latest('id')->filter($filters);
+        $query = Item::query()
+            ->with(['pictures', 'activePrices'])
+            ->latest('id')->filter($filters)
+            ->search($filters);
 
         return response()->json(['data' => $query->paginate($request->per_page ?? 10)], HttpStatus::OK->value);
     }
