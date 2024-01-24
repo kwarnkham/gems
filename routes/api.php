@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MeetController;
 use App\Http\Controllers\PictureController;
+use App\Http\Controllers\PreOrderController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\UserController;
@@ -54,6 +55,16 @@ Route::controller(SpecificationController::class)
             Route::post('', 'store');
             Route::put('{specification}', 'update');
             Route::get('{specification}', 'find');
+        });
+    });
+
+Route::controller(PreOrderController::class)
+    ->prefix('pre-orders')
+    ->group(function () {
+        Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
+            Route::post('', 'store');
+            Route::put('{preOrder}', 'update');
+            Route::get('', 'index');
         });
     });
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('contact_id')->constrained();
             $table->text('note');
+            $table->boolean('dealt')->default(false);
             $table->timestamps();
         });
     }

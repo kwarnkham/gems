@@ -12,4 +12,9 @@ class Contact extends BaseModel
     {
         return $this->hasMany(Meet::class)->latest('id');
     }
+
+    public function preOrders()
+    {
+        return $this->hasMany(PreOrder::class)->latest('id');
+    }
 }
