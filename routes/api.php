@@ -65,6 +65,7 @@ Route::controller(PreOrderController::class)
             Route::post('', 'store');
             Route::put('{preOrder}', 'update');
             Route::get('', 'index');
+            Route::get('{preOrder}', 'find');
         });
     });
 

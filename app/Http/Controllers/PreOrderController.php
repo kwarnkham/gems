@@ -74,4 +74,9 @@ class PreOrderController extends Controller
 
         return response()->json($preOrder);
     }
+
+    public function find(Request $request, PreOrder $preOrder)
+    {
+        return response()->json($preOrder);
+    }
 }

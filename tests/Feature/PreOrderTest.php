@@ -45,6 +45,14 @@ class PreOrderTest extends TestCase
         $this->assertEquals($updatedPreOrder->carat, $response->json()['carat']);
     }
 
+    public function test_get_a_pre_order(): void
+    {
+        $contact = Contact::query()->create(['name' => fake()->name(), 'phone' => fake()->phoneNumber()]);
+        $preOrder = PreOrder::factory()->create(['contact_id' => $contact->id]);
+        $response = $this->actingAs($this->user)->getJson('api/pre-orders/' . $preOrder->id);
+        $response->assertOk();
+    }
+
     public function test_list_pre_orders(): void
     {
         $response = $this->actingAs($this->user)->getJson('api/pre-orders');

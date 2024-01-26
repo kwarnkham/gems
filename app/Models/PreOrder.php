@@ -8,6 +8,9 @@ class PreOrder extends BaseModel
 {
     use HasFactory;
 
+
+    protected $with = ['contact'];
+
     public function contact()
     {
         return $this->belongsTo(Contact::class);
