@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PreOrder extends BaseModel
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
 
     protected $with = ['contact'];

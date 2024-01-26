@@ -12,7 +12,10 @@ class PreOrderController extends Controller
 {
     public function index(Request $request)
     {
-        $query = PreOrder::query();
+        $filters = $request->validate([
+            'contact_id' => ['sometimes', 'numeric']
+        ]);
+        $query = PreOrder::query()->filter($filters);
         return response()->json(['data' => $query->paginate($request->per_page ?? 10)]);
     }
 

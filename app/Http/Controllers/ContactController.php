@@ -30,6 +30,6 @@ class ContactController extends Controller
 
     public function find(Request $request, Contact $contact)
     {
-        return response()->json($contact->load(['meets']));
+        return response()->json($contact->load(['meets', 'preOrders']));
     }
 }

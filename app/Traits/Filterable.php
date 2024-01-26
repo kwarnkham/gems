@@ -32,6 +32,14 @@ trait Filterable
             )
         );
 
+        $query->when(
+            $filters['contact_id'] ?? null,
+            fn (Builder $query, $contactId) => $query->where(
+                'contact_id',
+                $contactId
+            )
+        );
+
 
 
         return $query;
