@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\PreOrderStatus;
 use App\Models\Contact;
 use App\Models\PreOrder;
 use App\Models\User;
@@ -57,5 +58,16 @@ class PreOrderTest extends TestCase
     {
         $response = $this->actingAs($this->user)->getJson('api/pre-orders');
         $response->assertOk();
+    }
+
+    public function test_complete_a_pre_order(): void
+    {
+        $contact = Contact::query()->create(['name' => fake()->name(), 'phone' => fake()->phoneNumber()]);
+        $preOrder = PreOrder::factory()->create(['contact_id' => $contact->id]);
+        $response = $this->actingAs($this->user)->postJson("api/pre-orders/{$preOrder->id}/status", [
+            'status' => PreOrderStatus::COMPLETED->value
+        ]);
+        $response->assertOk();
+        $this->assertEquals($preOrder->fresh()->status, PreOrderStatus::COMPLETED->value);
     }
 }

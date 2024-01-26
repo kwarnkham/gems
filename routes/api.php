@@ -64,6 +64,7 @@ Route::controller(PreOrderController::class)
         Route::middleware(['role:admin', 'auth:sanctum'])->group(function () {
             Route::post('', 'store');
             Route::put('{preOrder}', 'update');
+            Route::post('{preOrder}/status', 'status');
             Route::get('', 'index');
             Route::get('{preOrder}', 'find');
         });

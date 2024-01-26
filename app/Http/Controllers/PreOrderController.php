@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Enums\HttpStatus;
+use App\Enums\PreOrderStatus;
 use App\Models\Contact;
 use App\Models\PreOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class PreOrderController extends Controller
 {
@@ -80,6 +82,15 @@ class PreOrderController extends Controller
 
     public function find(Request $request, PreOrder $preOrder)
     {
+        return response()->json($preOrder);
+    }
+
+    public function status(Request $request, PreOrder $preOrder)
+    {
+        $data = $request->validate([
+            'status' => ['required', Rule::in(PreOrderStatus::all())]
+        ]);
+        $preOrder->update(['status' => $data['status']]);
         return response()->json($preOrder);
     }
 }
