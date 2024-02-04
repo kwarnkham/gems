@@ -20,7 +20,8 @@ trait Filterable
             $filters['name'] ?? null,
             fn (Builder $query, $name) => $query->where(
                 'name',
-                $name
+                'like',
+                "%{$name}%"
             )
         );
 
