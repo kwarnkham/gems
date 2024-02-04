@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('item_id')->constrained();
             $table->string('shape')->nullable();
             $table->string('measurements')->nullable();
-            $table->integer('carat_weight')->nullable();
+            $table->double('carat_weight')->nullable();
             $table->integer('color_grade')->nullable();
             $table->integer('clarity_grade')->nullable();
             $table->integer('cut_grade')->nullable();
